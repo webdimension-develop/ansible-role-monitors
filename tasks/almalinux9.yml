@@ -9,13 +9,20 @@
     - glances
     - htop
 
+- name: Install git
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+
 # bashtoo
 - name: Git Clone bash_top
   become: true
   ansible.builtin.git:
     repo: https://github.com/aristocratos/bashtop.git
     dest: /tmp/bashtop
-    version: latest
 
 
 - name: Move bashtop to the /usr/local/bin
