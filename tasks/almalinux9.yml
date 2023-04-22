@@ -1,0 +1,23 @@
+---
+# tasks file for roles/glances
+- name: Install monitors
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - glances
+    - htop
+
+# bashtoo
+- name: Git Clone bash_top
+  become: true
+  ansible.builtin.git:
+    repo: https://github.com/aristocratos/bashtop.git
+    dest: /tmp/bashtop
+    version: latest
+
+
+- name: Move bashtop to the /usr/local/bin
+  become: true
+  command: "cp /tmp/bashtop/bashtop /usr/local/bin"
